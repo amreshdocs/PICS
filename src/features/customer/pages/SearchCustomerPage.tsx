@@ -231,7 +231,7 @@ export const SearchCustomerPage: React.FC = () => {
             <table className='w-full border-collapse'>
               <thead className='bg-gray-50 border-b border-gray-200'>
                 <tr>
-                  {getTableColumns().map((column) => (
+                  {getCustomerTableColumns().map((column) => (
                     <th
                       key={column}
                       className='px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider whitespace-nowrap'
@@ -242,18 +242,21 @@ export const SearchCustomerPage: React.FC = () => {
                 </tr>
               </thead>
               <tbody className='divide-y divide-gray-100'>
-                {results.data.map((row: TableRow, index: number) => (
-                  <tr key={index} className='hover:bg-gray-50 transition-colors duration-150'>
-                    {getTableColumns().map((column) => (
-                      <td
-                        key={`${index}-${column}`}
-                        className='px-6 py-3.5 text-sm text-gray-700 whitespace-nowrap overflow-hidden text-ellipsis max-w-xs'
-                      >
-                        {String(row[column] || '-')}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
+                {results.data.map((row: TableRow, index: number) => {
+                  const customerDetails = extractCustomerDetails(row);
+                  return (
+                    <tr key={index} className='hover:bg-gray-50 transition-colors duration-150'>
+                      {getCustomerTableColumns().map((column) => (
+                        <td
+                          key={`${index}-${column}`}
+                          className='px-6 py-3.5 text-sm text-gray-700 whitespace-nowrap overflow-hidden text-ellipsis max-w-xs'
+                        >
+                          {customerDetails[column]}
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
