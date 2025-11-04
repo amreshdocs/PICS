@@ -29,7 +29,7 @@ export const Sidebar: React.FC = () => {
         sidebarOpen ? 'w-64' : 'w-20'
       }`}
     >
-      <div className='flex items-center justify-between px-6 py-5 border-b border-gray-200 sticky top-0 bg-white shadow-sm'>
+      <div className='flex items-center justify-between px-6 py-4 border-b border-gray-200 sticky top-0 bg-white shadow-sm gap-2'>
         {sidebarOpen && (
           <h1 className='text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent'>
             Admin
@@ -37,7 +37,7 @@ export const Sidebar: React.FC = () => {
         )}
         <button
           onClick={() => dispatch(toggleSidebar())}
-          className='p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-600 hover:text-gray-900'
+          className='p-2 hover:bg-gray-100 rounded-md transition-colors text-gray-600 hover:text-gray-900 flex-shrink-0'
           aria-label='Toggle sidebar'
         >
           ☰
