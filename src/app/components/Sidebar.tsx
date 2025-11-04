@@ -29,7 +29,7 @@ export const Sidebar: React.FC = () => {
         sidebarOpen ? 'w-64' : 'w-20'
       }`}
     >
-      <div className='flex items-center justify-between px-6 py-5 border-b border-gray-200 sticky top-0 bg-white shadow-sm'>
+      <div className='flex items-center justify-between px-6 py-4 border-b border-gray-200 sticky top-0 bg-white shadow-sm gap-2'>
         {sidebarOpen && (
           <h1 className='text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent'>
             Admin
@@ -37,15 +37,15 @@ export const Sidebar: React.FC = () => {
         )}
         <button
           onClick={() => dispatch(toggleSidebar())}
-          className='p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-600 hover:text-gray-900'
+          className='p-2 hover:bg-gray-100 rounded-md transition-colors text-gray-600 hover:text-gray-900 flex-shrink-0'
           aria-label='Toggle sidebar'
         >
           ☰
         </button>
       </div>
 
-      <nav className='px-4 py-6 space-y-1'>
-        <ul className='space-y-1'>
+      <nav className='px-4 py-6 space-y-2'>
+        <ul className='space-y-2'>
           {MENU_ITEMS.map((item) => {
             const isActive = location.pathname === item.path;
             const isMenuExpanded = expandedMenu === item.id;
@@ -55,7 +55,7 @@ export const Sidebar: React.FC = () => {
               <li key={item.id}>
                 <button
                   onClick={() => handleMenuClick(item.id)}
-                  className={`w-full flex items-center justify-between gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                  className={`w-full flex items-center justify-between gap-4 px-4 py-3 rounded-md transition-all duration-200 ${
                     isActive
                       ? 'bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 font-semibold shadow-sm'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
@@ -78,12 +78,12 @@ export const Sidebar: React.FC = () => {
                 </button>
 
                 {sidebarOpen && hasSubmenu && isMenuExpanded && (
-                  <ul className='mt-2 ml-6 space-y-1 border-l-2 border-blue-200 pl-4'>
+                  <ul className='mt-3 ml-6 space-y-2 border-l-2 border-blue-200 pl-4'>
                     {item.submenu.map((subitem) => (
                       <li key={subitem.id}>
                         <button
                           onClick={() => handleSubMenuClick(subitem.endpointId)}
-                          className='w-full text-left px-3 py-2.5 text-sm text-gray-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-all duration-150 font-medium truncate'
+                          className='w-full text-left px-3 py-2 text-sm text-gray-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-all duration-150 font-medium truncate'
                           title={subitem.label}
                         >
                           {subitem.label}
