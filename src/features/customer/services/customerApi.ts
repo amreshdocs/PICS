@@ -53,7 +53,7 @@ export const customerApi = {
         pageSize: pageSize.toString(),
       });
 
-      const response = await fetch(`/service/api/payment/customer?${queryParams.toString()}`, {
+      const response = await fetch(`/api/payment/customer?${queryParams.toString()}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
