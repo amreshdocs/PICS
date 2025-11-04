@@ -44,8 +44,8 @@ export const Sidebar: React.FC = () => {
         </button>
       </div>
 
-      <nav className='px-4 py-6 space-y-1'>
-        <ul className='space-y-1'>
+      <nav className='px-4 py-6 space-y-2'>
+        <ul className='space-y-2'>
           {MENU_ITEMS.map((item) => {
             const isActive = location.pathname === item.path;
             const isMenuExpanded = expandedMenu === item.id;
