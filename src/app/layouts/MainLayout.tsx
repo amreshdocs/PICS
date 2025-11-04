@@ -7,7 +7,7 @@ export const MainLayout: React.FC = () => {
     <div className='flex h-screen bg-gradient-to-br from-gray-50 to-gray-100'>
       <Sidebar />
       <main className='flex-1 overflow-auto'>
-        <div className='p-8 max-w-7xl mx-auto'>
+        <div className='p-lg max-w-7xl mx-auto'>
           <Outlet />
         </div>
       </main>
