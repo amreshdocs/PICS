@@ -52,17 +52,14 @@ export const relatedAcctsApi = {
         pageSize: pageSize.toString(),
       });
 
-      const response = await fetch(
-        `/api/payment/customer?${queryParams.toString()}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-            'X-API-Key': API_KEY,
-          },
-        }
-      );
+      const response = await fetch(`/api/payment/customer?${queryParams.toString()}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+          'X-API-Key': API_KEY,
+        },
+      });
 
       if (!response.ok) {
         const errorBody = await response.text();
