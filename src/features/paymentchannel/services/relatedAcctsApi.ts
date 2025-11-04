@@ -53,7 +53,7 @@ export const relatedAcctsApi = {
       });
 
       const response = await fetch(
-        `/service/api/payment/customer?${queryParams.toString()}`,
+        `/api/payment/customer?${queryParams.toString()}`,
         {
           method: 'GET',
           headers: {

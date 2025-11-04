@@ -67,8 +67,8 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/service': {
-        target: `${apiBaseUrl}/v1`,
+      '/api': {
+        target: `${apiBaseUrl}`,
         changeOrigin: true,
         secure: true,
         // Removed proxy event handlers due to TypeScript compatibility issues
