@@ -55,7 +55,7 @@ export const Sidebar: React.FC = () => {
               <li key={item.id}>
                 <button
                   onClick={() => handleMenuClick(item.id)}
-                  className={`w-full flex items-center justify-between gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                  className={`w-full flex items-center justify-between gap-4 px-4 py-3 rounded-md transition-all duration-200 ${
                     isActive
                       ? 'bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 font-semibold shadow-sm'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
