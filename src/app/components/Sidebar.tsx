@@ -78,12 +78,12 @@ export const Sidebar: React.FC = () => {
                 </button>
 
                 {sidebarOpen && hasSubmenu && isMenuExpanded && (
-                  <ul className='mt-2 ml-6 space-y-1 border-l-2 border-blue-200 pl-4'>
+                  <ul className='mt-3 ml-6 space-y-2 border-l-2 border-blue-200 pl-4'>
                     {item.submenu.map((subitem) => (
                       <li key={subitem.id}>
                         <button
                           onClick={() => handleSubMenuClick(subitem.endpointId)}
-                          className='w-full text-left px-3 py-2.5 text-sm text-gray-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-all duration-150 font-medium truncate'
+                          className='w-full text-left px-3 py-2 text-sm text-gray-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-all duration-150 font-medium truncate'
                           title={subitem.label}
                         >
                           {subitem.label}
