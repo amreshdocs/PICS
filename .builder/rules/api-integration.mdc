@@ -1,0 +1,74 @@
+---
+description: API integration and data fetching patterns
+globs:
+  - "src/**/services/**/*"
+  - "src/**/hooks/**/*"
+alwaysApply: true
+---
+
+# API Integration Rules
+
+## Service Layer Structure
+All API services must follow this pattern:
+```typescript
+import { httpClient } from '@/shared/services/api';
+import type { User, CreateUserRequest, UpdateUserRequest, PaginatedResponse } from './types';
+
+export const usersApi = {
+  getUsers: async (params?: UserFilters): Promise<PaginatedResponse<User>> => {
+    const response = await httpClient.get('/users', { params });
+    return response.data;
+  },
+  
+  getUser: async (id: string): Promise<User> => {
+    const response = await httpClient.get(`/users/${id}`);
+    return response.data;
+  },
+  
+  createUser: async (data: CreateUserRequest): Promise<User> => {
+    const response = await httpClient.post('/users', data);
+    return response.data;
+  },
+  
+  updateUser: async (id: string, data: UpdateUserRequest): Promise<User> => {
+    const response = await httpClient.put(`/users/${id}`, data);
+    return response.data;
+  },
+  
+  deleteUser: async (id: string): Promise<void> => {
+    await httpClient.delete(`/users/${id}`);
+  },
+};
+```
+
+## React Query Integration
+Use React Query for all data fetching:
+```typescript
+export const useUsers = (filters?: UserFilters) => {
+  return useQuery({
+    queryKey: ['users', filters],
+    queryFn: () => usersApi.getUsers(filters),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  });
+};
+
+export const useUserMutations = () => {
+  const queryClient = useQueryClient();
+  
+  return {
+    createUser: useMutation({
+      mutationFn: usersApi.createUser,
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['users'] });
+      },
+    }),
+    // ... other mutations
+  };
+};
+```
+
+## Error Handling
+- Always wrap API calls in try-catch blocks
+- Use proper HTTP status code handling
+- Show user-friendly error messages
+- Log errors for debugging purposes

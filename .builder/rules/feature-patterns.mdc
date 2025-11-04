@@ -1,0 +1,63 @@
+---
+description: Feature-specific component patterns
+globs:
+  - "src/features/**/*"
+alwaysApply: true
+---
+
+# Feature Component Patterns
+
+## Standard Feature Components
+Each feature should implement these component types when applicable:
+
+### List Components (e.g., UserList, ProductList)
+- Must include pagination, sorting, and filtering
+- Use shared DataTable component from @/shared/components/tables
+- Include bulk actions when appropriate
+- Handle empty states gracefully
+
+### Form Components (e.g., UserForm, ProductForm)
+- Use React Hook Form with Zod validation
+- Include proper error handling and field validation
+- Support both create and edit modes
+- Show loading states during submission
+
+### Card Components (e.g., UserCard, ProductCard)
+- Display key entity information in card format
+- Include hover effects and click actions
+- Show entity status with badges
+- Keep content concise and scannable
+
+### Detail/Profile Components
+- Support both view and edit modes
+- Use tabs for organizing complex information
+- Include breadcrumb navigation
+- Show related data and actions
+
+## Hook Patterns
+
+### Query Hooks (e.g., useUsers, useProducts)
+- Use React Query/TanStack Query for data fetching
+- Include pagination, filtering, and sorting parameters
+- Handle loading, error, and empty states
+- Implement proper caching strategies
+
+### Mutation Hooks (e.g., useUserMutations)
+- Group related mutations (create, update, delete)
+- Include optimistic updates where appropriate
+- Handle error states and rollbacks
+- Show success/error notifications
+
+## Service Patterns
+- Centralize all API calls in service files
+- Use consistent error handling across all endpoints
+- Include proper TypeScript types for requests/responses
+- Implement retry logic for failed requests
+
+## Subflow Pattern within a Single Feature (e.g., Transfers)
+- Keep a single feature module (e.g., `transfers`) with subflow-specific UI and logic under dedicated folders
+  - `src/features/transfers/components/m2m/*`
+  - `src/features/transfers/components/p2p/*`
+- Use shared page containers (e.g., `TransferCreatePage`) that switch sub-components based on a route param or query (`type=m2m|p2p`)
+- Keep validation and server limit handling in shared helpers, parameterized by subflow
+- Prefer strategy pattern over branching logic scattered across components

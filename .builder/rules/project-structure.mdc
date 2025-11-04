@@ -1,0 +1,49 @@
+---
+description: Project structure and organization rules
+globs:
+    - "src/**/*"
+alwaysApply: true
+---
+
+# Project Structure Rules
+
+## Directory Organization
+This project uses a hybrid feature-based structure. Route-level pages are feature-owned.
+
+- `src/app/` - Global app configuration, providers, routing
+- `src/shared/` - Reusable components, hooks, services, utilities
+- `src/features/` - Feature-specific modules with complete ownership
+- `src/assets/` - Static assets
+- `src/pages/` - (Deprecated)
+
+## Feature Module Structure
+Each feature must follow this exact structure:
+```
+features/{featureName}/
+├── components/     # Feature-specific components
+├── hooks/         # Feature-specific hooks
+├── services/      # API calls and business logic
+├── types/         # TypeScript type definitions
+├── pages/         # Page components
+├── store/         # Feature state (if complex)
+└── index.ts       # Barrel exports
+```
+
+## Component Placement Rules
+- Place in `shared/` if: used by 2+ features, generic/configurable, no business logic
+- Place in `features/{feature}/` if: feature-specific logic, domain knowledge, single feature use
+
+## File Naming Conventions
+- Components: PascalCase.tsx (UserList.tsx, DashboardStats.tsx)
+- Hooks: camelCase.ts with 'use' prefix (useUsers.ts, useAuth.ts)
+- Services: camelCase.ts + 'Api' suffix (usersApi.ts, authApi.ts)
+- Types: camelCase.types.ts (user.types.ts, dashboard.types.ts)
+- Pages: PascalCase + 'Page' suffix (UsersListPage.tsx)
+
+## Barrel Exports
+Always create index.ts files with named exports:
+```typescript
+export { UserList } from './UserList';
+export { UserForm } from './UserForm';
+export { UserCard } from './UserCard';
+```

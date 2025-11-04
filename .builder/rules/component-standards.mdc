@@ -1,0 +1,79 @@
+---
+description: React component standards and patterns
+globs:
+  - "src/**/*.tsx"
+  - "src/**/*.ts"
+alwaysApply: true
+---
+
+# Component Standards
+
+## Component Structure
+All React components must follow this structure:
+```typescript
+import React from 'react';
+// Third-party imports
+// Shared imports using @/shared/ alias
+// Feature imports using @/features/ alias
+// Relative imports
+
+interface ComponentNameProps {
+  // Props definition
+}
+
+export const ComponentName: React.FC<ComponentNameProps> = ({
+  // Destructured props
+}) => {
+  // Hooks at the top
+  // Event handlers
+  // Render logic
+
+  return (
+    <div className="component-container">
+      {/* Component JSX */}
+    </div>
+  );
+};
+
+export default ComponentName;
+```
+
+## TypeScript Guidelines
+- Always define interfaces for component props
+- Use generic types for reusable components
+- Prefer `interface` over `type` for object shapes
+- Include proper error types for API responses
+
+## Import Order
+1. React and React-related imports
+2. Third-party library imports
+3. Shared imports (@/shared/)
+4. Feature imports (@/features/)
+5. Relative imports (./ or ../)
+
+## Styling Rules
+- Use Tailwind CSS utility classes
+- Follow desktop-first responsive design using max-width breakpoints (max-lg:, max-md:, max-sm:)
+- When Tailwind is insufficient, use external CSS libraries
+- Check existing project libraries before installing new ones
+- Ensure proper focus states for interactive elements
+- Use semantic color classes when possible
+- Prefix custom classes with `pol-` and use BEM methodology when needed
+
+## Route Conventions
+- Pages live under `features/{feature}/pages/*Page.tsx`
+- Use query or path params to toggle subflows within a feature rather than separate features
+- Example: `/transfers/create?type=m2m|p2p`
+
+## Component Composition and Maintainability
+- Break down complex UI into smaller, focused components to avoid deeply nested JSX trees
+- Create auxiliary smaller files even within a single page/route to improve maintainability
+- Split large components into multiple files when they become complex
+- Each component should have a single responsibility
+- Prefer composition over complex conditional rendering within a single component
+- Use descriptive names for sub-components that indicate their purpose
+
+## Error Handling
+- All components must handle loading and error states
+- Use proper error boundaries where appropriate
+- Show user-friendly error messages

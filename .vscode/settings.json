@@ -1,0 +1,146 @@
+{
+  // === Code Formatting & Quality ===
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit",
+    "source.removeUnusedImports": "explicit"
+  },
+  // === TypeScript Configuration ===
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.importModuleSpecifierEnding": "minimal",
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "typescript.inlayHints.parameterNames.enabled": "literals",
+  "typescript.inlayHints.parameterTypes.enabled": true,
+  "typescript.inlayHints.variableTypes.enabled": false,
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "typescript.inlayHints.enumMemberValues.enabled": true,
+  "typescript.suggest.autoImports": true,
+  "typescript.suggest.paths": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  // === React/JSX Configuration ===
+  "emmet.includeLanguages": {
+    "typescript": "html",
+    "typescriptreact": "html",
+    "javascript": "html",
+    "javascriptreact": "html"
+  },
+  "emmet.triggerExpansionOnTab": true,
+  // === Editor Appearance & Behavior ===
+  "editor.rulers": [
+    100
+  ],
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.renderWhitespace": "boundary",
+  "editor.trimAutoWhitespace": true,
+  "editor.linkedEditing": true,
+  "editor.guides.bracketPairs": true,
+  "editor.minimap.enabled": true,
+  "editor.minimap.maxColumn": 100,
+  "editor.wordWrap": "off",
+  "editor.lineNumbers": "on",
+  "editor.folding": true,
+  "editor.foldingImportsByDefault": false,
+  // === Cursor & Selection ===
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.suggest.insertMode": "replace",
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.acceptSuggestionOnEnter": "on",
+  // === File Management ===
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
+  "files.encoding": "utf8",
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  // === File Exclusions for Better Performance ===
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/.nyc_output": true,
+    "**/.cache": true,
+    "**/coverage": true,
+    "**/*.tsbuildinfo": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.git": true,
+    "**/coverage": true,
+    "**/*.lock": true,
+    "**/.cache": true
+  },
+  // === Git Configuration ===
+  "git.enableSmartCommit": true,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableStatusBarSync": true,
+  // === Security & Banking-Specific Settings ===
+  "html.validate.scripts": true,
+  "javascript.validate.enable": true,
+  "typescript.validate.enable": true,
+  // === Explorer & Workspace ===
+  "explorer.compactFolders": false,
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js",
+    "*.tsx": "${capture}.js",
+    "*.component.ts": "${capture}.component.html, ${capture}.component.scss, ${capture}.component.spec.ts",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb",
+    "tsconfig.json": "tsconfig.*.json",
+    ".eslintrc.*": ".eslintignore, .eslintrc.*, eslint.config.*",
+    ".prettierrc.*": ".prettierignore, .prettierrc.*",
+    "vite.config.*": "vite.config.*, vitest.config.*",
+    "tailwind.config.*": "tailwind.config.*, postcss.config.*"
+  },
+  "breadcrumbs.enabled": true,
+  // === Problems & Diagnostics ===
+  "problems.showCurrentInStatus": true,
+  "problems.sortOrder": "severity",
+  // === Terminal Configuration ===
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.cursorStyle": "line",
+  // === Extensions & Language Features ===
+  "extensions.ignoreRecommendations": false,
+  // === Performance Optimizations ===
+  "search.smartCase": true,
+  "search.followSymlinks": false,
+  "search.maxResults": 10000,
+  // === Workbench Appearance ===
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.showTabs": "multiple",
+  "workbench.editor.tabSizing": "shrink",
+  "workbench.tree.indent": 20,
+  // === Project-Specific Language Settings ===
+  "css.validate": true,
+  "scss.validate": true,
+  "less.validate": true,
+  // === Auto Import and Suggestion Settings ===
+  "typescript.suggest.includeAutomaticOptionalChainCompletions": true,
+  "javascript.suggest.includeAutomaticOptionalChainCompletions": true,
+  "typescript.suggest.includeCompletionsForImportStatements": true,
+  "javascript.suggest.includeCompletionsForImportStatements": true,
+  // === Code Lens ===
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.referencesCodeLens.showOnAllFunctions": true,
+  "javascript.referencesCodeLens.enabled": true,
+  "javascript.referencesCodeLens.showOnAllFunctions": true,
+  // === React Snippets and Components ===
+  "editor.snippetSuggestions": "top"
+}

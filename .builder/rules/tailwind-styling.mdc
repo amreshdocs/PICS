@@ -1,0 +1,69 @@
+---
+description: Tailwind CSS styling guidelines and patterns
+globs:
+  - "src/**/*.tsx"
+alwaysApply: true
+---
+
+# Tailwind CSS Styling Rules
+
+## General Guidelines
+- Use Tailwind utility classes
+- Follow desktop-first responsive design (use max-width breakpoints: max-xl:, max-lg:, max-md:, max-sm:)
+- Use consistent spacing with Tailwind's spacing scale
+- When Tailwind limitations are reached, use external CSS libraries
+- Prefer semantic class combinations over single-use classes
+
+## Layout Patterns
+- Use CSS Grid for complex layouts: `grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1`
+- Use Flexbox for simpler arrangements: `flex items-center justify-between`
+- Container patterns: `container mx-auto px-4 py-6`
+- Desktop-first responsive: Start with desktop layout, then adapt for smaller screens
+
+## Component Class Patterns
+
+### Buttons
+```typescript
+// Primary button
+className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
+
+// Secondary button  
+className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-md transition-colors"
+
+// Danger button
+className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition-colors"
+```
+
+### Cards
+```typescript
+className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow"
+```
+
+### Form Elements
+```typescript
+// Input fields
+className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+// Labels
+className="block text-sm font-medium text-gray-700 mb-2"
+
+// Error messages
+className="text-red-600 text-sm mt-1"
+```
+
+## Responsive Design
+- Always include responsive variants
+- Start with desktop design, then add smaller screen variants using max-width breakpoints
+- Use consistent breakpoints: max-sm (max-width: 639px), max-md (max-width: 767px), max-lg (max-width: 1023px), max-xl (max-width: 1279px)
+- Desktop-first approach: `grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1`
+
+## Color Usage
+- Use semantic colors: blue for primary actions, red for danger, green for success
+- Maintain consistent color palette across the application
+- Use proper contrast ratios for accessibility
+
+## Focus States
+All interactive elements must have proper focus states:
+- Buttons: `focus:outline-none focus:ring-2 focus:ring-blue-500`
+- Inputs: `focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`
+- Links: `focus:outline-none focus:underline`

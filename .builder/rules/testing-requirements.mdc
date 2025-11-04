@@ -1,0 +1,88 @@
+---
+description: Testing standards and requirements
+globs:
+  - "src/**/*.test.{ts,tsx}"
+  - "src/**/*.spec.{ts,tsx}"
+alwaysApply: false
+---
+
+# Testing Requirements
+
+## Testing Strategy
+- Unit tests for all custom hooks using React Testing Library
+- Component tests for complex interactive components
+- Integration tests for complete user workflows  
+- Minimum 80% code coverage for business logic
+
+## Hook Testing Pattern
+```typescript
+import { renderHook } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useUsers } from './useUsers';
+
+const createWrapper = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false } }
+  });
+  return ({ children }: { children: React.ReactNode }) => (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
+};
+
+describe('useUsers', () => {
+  it('should fetch users successfully', async () => {
+    const { result } = renderHook(() => useUsers(), {
+      wrapper: createWrapper(),
+    });
+    
+    await waitFor(() => {
+      expect(result.current.isSuccess).toBe(true);
+    });
+  });
+});
+```
+
+## Component Testing Pattern
+```typescript
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { UserForm } from './UserForm';
+
+describe('UserForm', () => {
+  it('should submit form with valid data', async () => {
+    const mockOnSubmit = jest.fn();
+    
+    render(<UserForm onSubmit={mockOnSubmit} />);
+    
+    fireEvent.change(screen.getByLabelText('Email'), {
+      target: { value: 'test@example.com' }
+    });
+    
+    fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
+    
+    await waitFor(() => {
+      expect(mockOnSubmit).toHaveBeenCalledWith({
+        email: 'test@example.com'
+      });
+    });
+  });
+});
+```
+
+## API Mocking
+Use MSW (Mock Service Worker) for API mocking:
+```typescript
+import { setupServer } from 'msw/node';
+import { http, HttpResponse } from 'msw';
+
+const server = setupServer(
+  http.get('/api/users', () => {
+    return HttpResponse.json([
+      { id: '1', name: 'John Doe', email: 'john@example.com' }
+    ]);
+  })
+);
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+```
