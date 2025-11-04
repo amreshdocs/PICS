@@ -78,24 +78,67 @@ export const SearchCustomerPage: React.FC = () => {
     setCurrentPage(1);
   };
 
-  const getTableColumns = (): string[] => {
-    if (!results || results.data.length === 0) return [];
-    return Object.keys(results.data[0]);
+  interface CustomerDetail {
+    name: string;
+    address: string;
+    birthDateOrBusinessSince: string;
+    ssn: string;
+    phone: string;
+    email: string;
+    cisNumber: string;
+  }
+
+  const formatPhoneNumber = (phone: string | number): string => {
+    const cleaned = String(phone).replace(/\D/g, '');
+    if (cleaned.length === 10) {
+      return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6)}`;
+    }
+    return String(phone);
   };
 
-  const formatColumnHeader = (columnName: string): string => {
+  const formatDate = (dateString: string): string => {
+    if (!dateString) return '-';
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    } catch {
+      return dateString;
+    }
+  };
+
+  const extractCustomerDetails = (data: Record<string, unknown>): CustomerDetail => {
+    return {
+      name: `${data.FirstName || ''} ${data.LastName || ''}`.trim() || '-',
+      address: `${data.Addr1 || ''} ${data.Addr2 || ''}`.trim() || '-',
+      birthDateOrBusinessSince: formatDate(String(data.BirthDt || '')),
+      ssn: String(data.TaxId || '') || '-',
+      phone: data.PrimaryPhoneNum ? formatPhoneNumber(String(data.PrimaryPhoneNum)) : '-',
+      email: String(data.EmailAddr || '').toLowerCase() || '-',
+      cisNumber: String(data.CustPermId || '') || '-',
+    };
+  };
+
+  const getCustomerTableColumns = (): (keyof CustomerDetail)[] => [
+    'name',
+    'address',
+    'birthDateOrBusinessSince',
+    'ssn',
+    'phone',
+    'email',
+    'cisNumber',
+  ];
+
+  const formatColumnHeader = (columnKey: string): string => {
     const headerMap: Record<string, string> = {
       name: 'Name',
       address: 'Address',
-      dob: 'Birth Date',
-      ssn: 'SSN/TIN',
-      txnId: 'Transaction ID',
+      birthDateOrBusinessSince: 'Birth Date / Business Since',
+      ssn: 'Social Security / Tax ID',
       phone: 'Phone Number',
       email: 'Email Address',
       cisNumber: 'CIS Number',
-      accountNumber: 'Account/Card Number',
     };
-    return headerMap[columnName] || columnName;
+    return headerMap[columnKey] || columnKey;
   };
 
   return (
