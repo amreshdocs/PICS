@@ -1,6 +1,6 @@
 import { authService } from '@/shared/services/authService';
 
-export type SearchType = 'accountNumber' | 'ssn' | 'name' | 'phone' | 'cisNumber';
+export type SearchType = 'accountNumber' | 'ssn' | 'name' | 'phone' | 'cisNumber' | 'taxId';
 
 export interface CustomerResult {
   name: string;
@@ -32,6 +32,7 @@ const getQueryParamName = (searchType: SearchType): string => {
     name: 'name',
     phone: 'phone',
     cisNumber: 'cisNumber',
+    taxId: 'taxId',
   };
   return paramMap[searchType];
 };
@@ -45,6 +46,41 @@ export const customerApi = {
   ): Promise<CustomerSearchResponse> => {
     try {
       const accessToken = await authService.getAccessToken();
+
+      // Use TaxId endpoint for taxId search type
+      if (searchType === 'taxId') {
+        const response = await fetch(`/api/urn:TaxId:Headers.TaxId/Reference/Retrieve`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+            'X-API-Key': API_KEY,
+          },
+          body: JSON.stringify({
+            TaxId: searchValue,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorBody = await response.text();
+          throw new Error(`Tax ID search failed with status ${response.status}: ${errorBody}`);
+        }
+
+        const responseData = await response.json();
+
+        // Normalize response to expected format
+        const normalizedResponse: CustomerSearchResponse = {
+          data: Array.isArray(responseData) ? responseData : responseData.data ? [responseData.data] : [responseData],
+          total: 1,
+          page,
+          pageSize,
+          totalPages: 1,
+        };
+
+        return normalizedResponse;
+      }
+
+      // Use payment customer endpoint for other search types
       const paramName = getQueryParamName(searchType);
 
       const queryParams = new URLSearchParams({
