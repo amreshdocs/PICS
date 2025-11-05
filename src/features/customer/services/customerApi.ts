@@ -1,6 +1,6 @@
 import { authService } from '@/shared/services/authService';
 
-export type SearchType = 'taxId';
+export type SearchType = 'accountNumber' | 'ssn' | 'name' | 'phone' | 'cisNumber' | 'taxId';
 
 export interface CustomerResult {
   name: string;

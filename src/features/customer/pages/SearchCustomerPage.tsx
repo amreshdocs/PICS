@@ -6,6 +6,7 @@ interface TableRow {
 }
 
 export const SearchCustomerPage: React.FC = () => {
+  const [searchType, setSearchType] = useState<SearchType>('taxId');
   const [searchValue, setSearchValue] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [results, setResults] = useState<CustomerSearchResponse | null>(null);
@@ -15,7 +16,7 @@ export const SearchCustomerPage: React.FC = () => {
 
   const handleSearch = async () => {
     if (!searchValue.trim()) {
-      setError('Please enter a Tax ID');
+      setError('Please enter a search value');
       return;
     }
 
@@ -25,7 +26,7 @@ export const SearchCustomerPage: React.FC = () => {
     setCurrentPage(1);
 
     try {
-      const data = await customerApi.search(searchValue.trim(), 'taxId', 1, pageSize);
+      const data = await customerApi.search(searchValue.trim(), searchType, 1, pageSize);
       setResults(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred during search');
@@ -41,7 +42,7 @@ export const SearchCustomerPage: React.FC = () => {
     setError(null);
 
     try {
-      const data = await customerApi.search(searchValue.trim(), 'taxId', page, pageSize);
+      const data = await customerApi.search(searchValue.trim(), searchType, page, pageSize);
       setResults(data);
       setCurrentPage(page);
     } catch (err) {
@@ -58,7 +59,7 @@ export const SearchCustomerPage: React.FC = () => {
     setError(null);
 
     try {
-      const data = await customerApi.search(searchValue.trim(), 'taxId', 1, newPageSize);
+      const data = await customerApi.search(searchValue.trim(), searchType, 1, newPageSize);
       setResults(data);
       setPageSize(newPageSize);
       setCurrentPage(1);
@@ -71,6 +72,7 @@ export const SearchCustomerPage: React.FC = () => {
 
   const handleClear = () => {
     setSearchValue('');
+    setSearchType('taxId');
     setResults(null);
     setError(null);
     setCurrentPage(1);
@@ -153,15 +155,53 @@ export const SearchCustomerPage: React.FC = () => {
       </div>
 
       <div className='bg-white rounded-lg shadow-sm border border-gray-200 p-6'>
-        {/* Search Input */}
+        {/* Search Filter */}
         <div className='flex flex-col gap-2'>
-          <label className='block text-sm font-medium text-gray-700'>Tax ID</label>
+          <label className='block text-sm font-medium text-gray-700'>Search Filter</label>
+          <select
+            value={searchType}
+            onChange={(e) => setSearchType(e.target.value as SearchType)}
+            className='w-full max-w-md px-4 py-2.5 border border-gray-300 rounded-md text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all'
+          >
+            <option value='accountNumber'>Search by Account or Card Number</option>
+            <option value='ssn'>
+              Search by Social Security Number or Tax Identification Number
+            </option>
+            <option value='taxId'>Search by Tax ID (TaxId Endpoint)</option>
+            <option value='name'>Search by Full or Partial Name</option>
+            <option value='phone'>Search by Telephone Number</option>
+            <option value='cisNumber'>Search by Customer CIS Number</option>
+          </select>
+        </div>
+
+        {/* Search Input */}
+        <div className='flex flex-col gap-2 mt-5'>
+          <label className='block text-sm font-medium text-gray-700'>
+            {searchType === 'accountNumber' && 'Account or Card Number'}
+            {searchType === 'ssn' && 'Social Security Number or Tax Identification Number'}
+            {searchType === 'taxId' && 'Tax ID'}
+            {searchType === 'name' && 'Full or Partial Name'}
+            {searchType === 'phone' && 'Telephone Number'}
+            {searchType === 'cisNumber' && 'Customer CIS Number'}
+          </label>
           <input
             type='text'
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-            placeholder='Enter tax ID'
+            placeholder={
+              searchType === 'accountNumber'
+                ? 'Enter account or card number'
+                : searchType === 'ssn'
+                  ? 'Enter SSN or tax ID'
+                  : searchType === 'taxId'
+                    ? 'Enter tax ID'
+                    : searchType === 'name'
+                      ? 'Enter full or partial name'
+                      : searchType === 'phone'
+                        ? 'Enter telephone number'
+                        : 'Enter customer CIS number'
+            }
             className='w-full max-w-md px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all'
           />
         </div>
