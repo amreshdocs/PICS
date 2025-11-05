@@ -167,6 +167,7 @@ export const SearchCustomerPage: React.FC = () => {
             <option value='ssn'>
               Search by Social Security Number or Tax Identification Number
             </option>
+            <option value='taxId'>Search by Tax ID (TaxId Endpoint)</option>
             <option value='name'>Search by Full or Partial Name</option>
             <option value='phone'>Search by Telephone Number</option>
             <option value='cisNumber'>Search by Customer CIS Number</option>
@@ -178,6 +179,7 @@ export const SearchCustomerPage: React.FC = () => {
           <label className='block text-sm font-medium text-gray-700'>
             {searchType === 'accountNumber' && 'Account or Card Number'}
             {searchType === 'ssn' && 'Social Security Number or Tax Identification Number'}
+            {searchType === 'taxId' && 'Tax ID'}
             {searchType === 'name' && 'Full or Partial Name'}
             {searchType === 'phone' && 'Telephone Number'}
             {searchType === 'cisNumber' && 'Customer CIS Number'}
@@ -192,11 +194,13 @@ export const SearchCustomerPage: React.FC = () => {
                 ? 'Enter account or card number'
                 : searchType === 'ssn'
                   ? 'Enter SSN or tax ID'
-                  : searchType === 'name'
-                    ? 'Enter full or partial name'
-                    : searchType === 'phone'
-                      ? 'Enter telephone number'
-                      : 'Enter customer CIS number'
+                  : searchType === 'taxId'
+                    ? 'Enter tax ID'
+                    : searchType === 'name'
+                      ? 'Enter full or partial name'
+                      : searchType === 'phone'
+                        ? 'Enter telephone number'
+                        : 'Enter customer CIS number'
             }
             className='w-full max-w-md px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all'
           />
