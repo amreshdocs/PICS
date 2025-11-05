@@ -50,7 +50,7 @@ export const customerApi = {
 
       if (!response.ok) {
         const errorBody = await response.text();
-        throw new Error(`Tax ID search failed with status ${response.status}: ${errorBody}`);
+        throw new Error(`Search failed with status ${response.status}: ${errorBody}`);
       }
 
       const responseData = await response.json();
