@@ -49,11 +49,21 @@ export const customerApi = {
       });
 
       if (!response.ok) {
-        const errorBody = await response.text();
+        let errorBody = '';
+        try {
+          errorBody = await response.clone().text();
+        } catch {
+          errorBody = response.statusText || `HTTP ${response.status}`;
+        }
         throw new Error(`Search failed with status ${response.status}: ${errorBody}`);
       }
 
-      const responseData = await response.json();
+      let responseData;
+      try {
+        responseData = await response.json();
+      } catch {
+        throw new Error(`Invalid response format: ${response.statusText}`);
+      }
 
       // Normalize response to expected format
       const normalizedResponse: CustomerSearchResponse = {
