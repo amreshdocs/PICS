@@ -38,7 +38,7 @@ export const customerApi = {
       const accessToken = await authService.getAccessToken();
 
       const response = await fetch(`/urn:TaxId:Headers.TaxId/Reference/Retrieve`, {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
