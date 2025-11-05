@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 
 // Get API base URL from environment variable
 const apiBaseUrl =
-  process.env.VITE_POL_API_BASE_URL || 'https://8hmuojxb93.execute-api.us-east-1.amazonaws.com';
+  process.env.VITE_POL_API_BASE_URL;
 
 // https://vite.dev/config/
 export default defineConfig({
