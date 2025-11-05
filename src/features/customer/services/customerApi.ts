@@ -1,6 +1,6 @@
 import { authService } from '@/shared/services/authService';
 
-export type SearchType = 'accountNumber' | 'ssn' | 'name' | 'phone' | 'cisNumber' | 'taxId';
+export type SearchType = 'taxId';
 
 export interface CustomerResult {
   name: string;
@@ -26,17 +26,6 @@ export interface CustomerSearchResponse {
 const API_KEY = import.meta.env.VITE_X_API_KEY || '';
 const APP_CODE = import.meta.env.VITE_APP_CODE || '';
 
-const getQueryParamName = (searchType: SearchType): string => {
-  const paramMap: Record<SearchType, string> = {
-    accountNumber: 'accountNumber',
-    ssn: 'ssn',
-    name: 'name',
-    phone: 'phone',
-    cisNumber: 'cisNumber',
-    taxId: 'taxId',
-  };
-  return paramMap[searchType];
-};
 
 export const customerApi = {
   search: async (
@@ -48,76 +37,35 @@ export const customerApi = {
     try {
       const accessToken = await authService.getAccessToken();
 
-      // Use TaxId endpoint for taxId search type
-      if (searchType === 'taxId') {
-        const response = await fetch(`/api/urn:TaxId:Headers.TaxId/Reference/Retrieve`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-            'X-API-Key': API_KEY,
-            TaxId: searchValue,
-            AppCode: APP_CODE,
-          },
-        });
-
-        if (!response.ok) {
-          const errorBody = await response.text();
-          throw new Error(`Tax ID search failed with status ${response.status}: ${errorBody}`);
-        }
-
-        const responseData = await response.json();
-
-        // Normalize response to expected format
-        const normalizedResponse: CustomerSearchResponse = {
-          data: Array.isArray(responseData)
-            ? responseData
-            : responseData.data
-              ? [responseData.data]
-              : [responseData],
-          total: 1,
-          page,
-          pageSize,
-          totalPages: 1,
-        };
-
-        return normalizedResponse;
-      }
-
-      // Use payment customer endpoint for other search types
-      const paramName = getQueryParamName(searchType);
-
-      const queryParams = new URLSearchParams({
-        [paramName]: searchValue,
-        page: page.toString(),
-        pageSize: pageSize.toString(),
-      });
-
-      const response = await fetch(`/api/payment/customer?${queryParams.toString()}`, {
-        method: 'GET',
+      const response = await fetch(`/api/urn:TaxId:Headers.TaxId/Reference/Retrieve`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
           'X-API-Key': API_KEY,
+          TaxId: searchValue,
+          AppCode: APP_CODE,
         },
       });
 
       if (!response.ok) {
         const errorBody = await response.text();
-        throw new Error(`Search failed with status ${response.status}: ${errorBody}`);
+        throw new Error(`Tax ID search failed with status ${response.status}: ${errorBody}`);
       }
 
       const responseData = await response.json();
 
       // Normalize response to expected format
       const normalizedResponse: CustomerSearchResponse = {
-        data: Array.isArray(responseData) ? responseData : responseData.data || [],
-        total: responseData.total || (Array.isArray(responseData) ? responseData.length : 0),
+        data: Array.isArray(responseData)
+          ? responseData
+          : responseData.data
+            ? [responseData.data]
+            : [responseData],
+        total: 1,
         page,
         pageSize,
-        totalPages: Math.ceil(
-          (responseData.total || (Array.isArray(responseData) ? responseData.length : 0)) / pageSize
-        ),
+        totalPages: 1,
       };
 
       return normalizedResponse;
