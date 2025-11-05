@@ -175,8 +175,7 @@ const authConfig: AuthConfig = {
   clientSecret:
     import.meta.env.VITE_POL_CLIENT_SECRET,
   tokenUrl:
-    import.meta.env.VITE_POL_TOKEN_URL ||
-    'https://poppaydev.auth.us-east-1.amazoncognito.com/oauth2/token',
+    import.meta.env.VITE_POL_TOKEN_URL,
   scope: 'https://resource-server.execute-api.us-east-1.amazon.com/dev/fis.write',
 };
 
