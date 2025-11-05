@@ -172,10 +172,8 @@ class AuthService {
 // Create auth service instance with configuration
 const authConfig: AuthConfig = {
   clientId: import.meta.env.VITE_POL_CLIENT_ID,
-  clientSecret:
-    import.meta.env.VITE_POL_CLIENT_SECRET,
-  tokenUrl:
-    import.meta.env.VITE_POL_TOKEN_URL,
+  clientSecret: import.meta.env.VITE_POL_CLIENT_SECRET,
+  tokenUrl: import.meta.env.VITE_POL_TOKEN_URL,
   scope: 'https://resource-server.execute-api.us-east-1.amazon.com/dev/fis.write',
 };
 

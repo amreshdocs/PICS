@@ -26,7 +26,6 @@ export interface CustomerSearchResponse {
 const API_KEY = import.meta.env.VITE_X_API_KEY || '';
 const APP_CODE = import.meta.env.VITE_APP_CODE || '';
 
-
 export const customerApi = {
   search: async (
     searchValue: string,
@@ -43,8 +42,8 @@ export const customerApi = {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
           'x-api-key': API_KEY,
-          'TaxId': searchValue,
-          'AppCode': APP_CODE,
+          TaxId: searchValue,
+          AppCode: APP_CODE,
           'x-client-traceid': new Date().toISOString(),
         },
       });

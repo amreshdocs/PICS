@@ -3,8 +3,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 
 // Get API base URL from environment variable
-const apiBaseUrl =
-  process.env.VITE_POL_API_BASE_URL;
+const apiBaseUrl = process.env.VITE_POL_API_BASE_URL;
 
 // https://vite.dev/config/
 export default defineConfig({
