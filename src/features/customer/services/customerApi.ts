@@ -37,14 +37,15 @@ export const customerApi = {
     try {
       const accessToken = await authService.getAccessToken();
 
-      const response = await fetch(`/urn:TaxId:Headers.TaxId/Reference/Retrieve`, {
+      const response = await fetch(`/v1/urn:TaxId:Headers.TaxId/Reference/Retrieve`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
-          'X-API-Key': API_KEY,
-          TaxId: searchValue,
-          AppCode: APP_CODE,
+          'x-api-key': API_KEY,
+          'TaxId': searchValue,
+          'AppCode': APP_CODE,
+          'x-client-traceid': new Date().toISOString(),
         },
       });
 
