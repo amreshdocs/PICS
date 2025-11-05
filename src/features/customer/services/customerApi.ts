@@ -56,8 +56,8 @@ export const customerApi = {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`,
             'X-API-Key': API_KEY,
-            'TaxId': searchValue,
-            'AppCode': APP_CODE,
+            TaxId: searchValue,
+            AppCode: APP_CODE,
           },
         });
 
@@ -70,7 +70,11 @@ export const customerApi = {
 
         // Normalize response to expected format
         const normalizedResponse: CustomerSearchResponse = {
-          data: Array.isArray(responseData) ? responseData : responseData.data ? [responseData.data] : [responseData],
+          data: Array.isArray(responseData)
+            ? responseData
+            : responseData.data
+              ? [responseData.data]
+              : [responseData],
           total: 1,
           page,
           pageSize,
