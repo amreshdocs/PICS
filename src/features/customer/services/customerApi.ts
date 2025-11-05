@@ -24,6 +24,7 @@ export interface CustomerSearchResponse {
 }
 
 const API_KEY = import.meta.env.VITE_X_API_KEY || '';
+const APP_CODE = import.meta.env.VITE_APP_CODE || '';
 
 const getQueryParamName = (searchType: SearchType): string => {
   const paramMap: Record<SearchType, string> = {
@@ -55,10 +56,9 @@ export const customerApi = {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`,
             'X-API-Key': API_KEY,
+            'TaxId': searchValue,
+            'AppCode': APP_CODE,
           },
-          body: JSON.stringify({
-            TaxId: searchValue,
-          }),
         });
 
         if (!response.ok) {
