@@ -37,7 +37,7 @@ export const customerApi = {
     try {
       const accessToken = await authService.getAccessToken();
 
-      const response = await fetch(`/api/urn:TaxId:Headers.TaxId/Reference/Retrieve`, {
+      const response = await fetch(`/urn:TaxId:Headers.TaxId/Reference/Retrieve`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

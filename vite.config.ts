@@ -74,6 +74,11 @@ export default defineConfig({
         // Removed proxy event handlers due to TypeScript compatibility issues
         // Basic proxy configuration is sufficient for development
       },
+      '/urn:TaxId:': {
+        target: `${apiBaseUrl}`,
+        changeOrigin: true,
+        secure: true,
+      },
     },
   },
 });
