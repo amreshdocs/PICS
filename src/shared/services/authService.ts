@@ -177,7 +177,7 @@ const authConfig: AuthConfig = {
   tokenUrl:
     import.meta.env.VITE_POL_TOKEN_URL ||
     'https://poppaydev.auth.us-east-1.amazoncognito.com/oauth2/token',
-  scope: 'https://resource-server.execute-api.us-east-1.amazon.com/dev/PopularPay.write',
+  scope: 'https://resource-server.execute-api.us-east-1.amazon.com/dev/fis.read',
 };
 
 export const authService = new AuthService(authConfig);
