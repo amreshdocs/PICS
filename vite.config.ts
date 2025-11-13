@@ -3,8 +3,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 
 // Get API base URL from environment variable
-const apiBaseUrl =
-  process.env.VITE_POL_API_BASE_URL || 'https://8hmuojxb93.execute-api.us-east-1.amazonaws.com';
+const apiBaseUrl = process.env.VITE_POL_API_BASE_URL;
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -45,17 +44,8 @@ export default defineConfig({
           }
 
           // Split features into separate chunks for better caching
-          if (id.includes('src/features/customers')) {
-            return 'customers-feature';
-          }
-          if (id.includes('src/features/transfers')) {
-            return 'transfers-feature';
-          }
-          if (id.includes('src/features/payments')) {
-            return 'payments-feature';
-          }
-          if (id.includes('src/features/dashboard')) {
-            return 'dashboard-feature';
+          if (id.includes('src/features/customer')) {
+            return 'customer-feature';
           }
         },
       },
@@ -67,12 +57,15 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/service': {
-        target: `${apiBaseUrl}/v1`,
+      '/urn:TaxId:': {
+        target: `${apiBaseUrl}`,
         changeOrigin: true,
         secure: true,
-        // Removed proxy event handlers due to TypeScript compatibility issues
-        // Basic proxy configuration is sufficient for development
+      },
+      '/urn:CustPermId:': {
+        target: `${apiBaseUrl}`,
+        changeOrigin: true,
+        secure: true,
       },
     },
   },

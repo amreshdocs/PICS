@@ -102,10 +102,14 @@ class AuthService {
 
       return this.accessToken;
     } catch (error) {
+      // On failure to fetch token (CORS or network error), clear stored token and return empty string
+      // This allows the frontend to continue using other headers (x-api-key) when Authorization cannot be obtained.
+      // Log the original error for debugging.
+      // eslint-disable-next-line no-console
+      console.error('Failed to obtain access token (falling back):', error);
       this.clearToken();
-      throw new Error(
-        `Failed to obtain access token: ${error instanceof Error ? error.message : 'Unknown error'}`
-      );
+      // Return empty string as a fallback token
+      return '';
     }
   }
 
@@ -171,13 +175,10 @@ class AuthService {
 
 // Create auth service instance with configuration
 const authConfig: AuthConfig = {
-  clientId: import.meta.env.VITE_POL_CLIENT_ID || '51llpbueb9dv9od2qj07o7mts',
-  clientSecret:
-    import.meta.env.VITE_POL_CLIENT_SECRET || 'fnhtuqmoh1afijnfkiue69athn5vpp7em670q792o6eu77d4pt9',
-  tokenUrl:
-    import.meta.env.VITE_POL_TOKEN_URL ||
-    'https://poppaydev.auth.us-east-1.amazoncognito.com/oauth2/token',
-  scope: 'https://resource-server.execute-api.us-east-1.amazon.com/dev/PopularPay.write',
+  clientId: import.meta.env.VITE_POL_CLIENT_ID,
+  clientSecret: import.meta.env.VITE_POL_CLIENT_SECRET,
+  tokenUrl: import.meta.env.VITE_POL_TOKEN_URL,
+  scope: 'https://resource-server.execute-api.us-east-1.amazon.com/dev/fis.read',
 };
 
 export const authService = new AuthService(authConfig);

@@ -1,20 +1,25 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import appReducer from './slices/appSlice';
+import customersReducer from '@/features/customers/store/customerSlice';
+
+const rootReducer = combineReducers({
+  app: appReducer,
+  customers: customersReducer,
+});
 
 const persistConfig = {
   key: 'root',
   storage,
   version: 1,
+  whitelist: ['app', 'customers'],
 };
 
-const persistedReducer = persistReducer(persistConfig, appReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {
-    app: persistedReducer,
-  },
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
