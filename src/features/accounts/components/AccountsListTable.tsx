@@ -94,11 +94,6 @@ export const AccountsListTable: React.FC<AccountsListTableProps> = ({
 
   const sortableColumns: (keyof AccountDetails)[] = ['number', 'bank', 'product'];
 
-  const formatCurrency = (value: number | null): string => {
-    if (value === null) return '$0.00';
-    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-  };
-
   const renderSortIndicator = (column: keyof AccountDetails) => {
     if (sortConfig.key !== column) return null;
     return sortConfig.direction === 'asc' ? ' ↑' : ' ↓';
