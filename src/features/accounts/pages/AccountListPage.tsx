@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '@/app/store/hooks';
 import type { AccountDetails } from '@/features/accounts/types/account.types';
