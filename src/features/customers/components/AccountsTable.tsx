@@ -104,6 +104,9 @@ export const AccountsTable: React.FC<AccountsTableProps> = ({ raw }) => {
     return <div className='text-sm text-gray-600'>No account information available</div>;
   }
 
+  const hasMoreAccounts = rows.length > ACCOUNT_DISPLAY_LIMIT;
+  const displayedRows = rows.slice(0, ACCOUNT_DISPLAY_LIMIT);
+
   const formatCurrency = (val: number | string | null) => {
     const num = Number(val);
     if (Number.isNaN(num)) return '-';
@@ -112,8 +115,13 @@ export const AccountsTable: React.FC<AccountsTableProps> = ({ raw }) => {
 
   return (
     <div className='mt-6 bg-white border border-gray-200 rounded-lg shadow-sm overflow-x-auto'>
-      <div className='px-4 py-3 border-b border-gray-100'>
+      <div className='px-4 py-3 border-b border-gray-100 flex items-center justify-between'>
         <h4 className='text-sm font-semibold text-gray-700'>Accounts</h4>
+        {hasMoreAccounts && (
+          <span className='text-xs text-gray-600'>
+            Showing {ACCOUNT_DISPLAY_LIMIT} of {rows.length}
+          </span>
+        )}
       </div>
       <table className='w-full table-auto'>
         <thead className='bg-gray-50 text-xs text-gray-600'>
@@ -128,7 +136,7 @@ export const AccountsTable: React.FC<AccountsTableProps> = ({ raw }) => {
           </tr>
         </thead>
         <tbody className='text-sm text-gray-700'>
-          {rows.map((r, i) => (
+          {displayedRows.map((r, i) => (
             <tr key={i} className='even:bg-gray-50'>
               <td className='px-4 py-3 break-words max-w-[160px]'>{r.number}</td>
               <td className='px-4 py-3'>
@@ -160,6 +168,16 @@ export const AccountsTable: React.FC<AccountsTableProps> = ({ raw }) => {
           ))}
         </tbody>
       </table>
+      {hasMoreAccounts && (
+        <div className='px-4 py-4 border-t border-gray-100 flex justify-center'>
+          <button
+            onClick={() => navigate('/accounts')}
+            className='px-6 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500'
+          >
+            View All Accounts
+          </button>
+        </div>
+      )}
     </div>
   );
 };
