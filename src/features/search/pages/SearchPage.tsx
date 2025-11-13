@@ -68,6 +68,7 @@ export const SearchPage: React.FC = () => {
       } catch {}
     } finally {
       setIsSearching(false);
+      window.dispatchEvent(new CustomEvent('search-complete'));
     }
   };
 
