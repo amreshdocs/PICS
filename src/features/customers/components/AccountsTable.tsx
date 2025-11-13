@@ -108,12 +108,6 @@ export const AccountsTable: React.FC<AccountsTableProps> = ({ raw }) => {
   const hasMoreAccounts = rows.length > ACCOUNT_DISPLAY_LIMIT;
   const displayedRows = rows.slice(0, ACCOUNT_DISPLAY_LIMIT);
 
-  const formatCurrency = (val: number | string | null) => {
-    const num = Number(val);
-    if (Number.isNaN(num)) return '-';
-    return num.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-  };
-
   return (
     <div className='mt-6 bg-white border border-gray-200 rounded-lg shadow-sm overflow-x-auto'>
       <div className='px-4 py-3 border-b border-gray-100 flex items-center justify-between'>
