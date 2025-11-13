@@ -1,19 +1,10 @@
 import React from 'react';
 import type { CustomerDemographics } from '@/features/customers/types/customer.types';
+import { formatDate } from '@/shared/utils';
 
 interface CustomerHeaderProps {
   customer: CustomerDemographics;
 }
-
-const formatDate = (dateString: string): string => {
-  if (!dateString || dateString === '-') return '-';
-  try {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
-  } catch {
-    return dateString;
-  }
-};
 
 export const CustomerHeader: React.FC<CustomerHeaderProps> = ({ customer }) => {
   return (

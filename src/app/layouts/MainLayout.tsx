@@ -5,6 +5,7 @@ export const MainLayout: React.FC = () => {
   const navigate = useNavigate();
   const [searchType, setSearchType] = useState<string>('accountNumber');
   const [searchValue, setSearchValue] = useState<string>('');
+  const [isSearching, setIsSearching] = useState(false);
   const [toast, setToast] = useState<{ message: string; visible: boolean }>({
     message: '',
     visible: false,
@@ -14,6 +15,7 @@ export const MainLayout: React.FC = () => {
     e?.preventDefault();
     // Navigate to search page without exposing query params in URL
     navigate('/search');
+    setIsSearching(true);
     // Dispatch a cross-window event to trigger the search on the SearchPage
     window.dispatchEvent(
       new CustomEvent('perform-search', { detail: { type: searchType, q: searchValue } })
@@ -35,8 +37,16 @@ export const MainLayout: React.FC = () => {
       window.setTimeout(() => setToast((s) => ({ ...s, visible: false })), timeout);
     };
 
+    const onSearchComplete = () => {
+      setIsSearching(false);
+    };
+
     window.addEventListener('app-toast', onToast as EventListener);
-    return () => window.removeEventListener('app-toast', onToast as EventListener);
+    window.addEventListener('search-complete', onSearchComplete as EventListener);
+    return () => {
+      window.removeEventListener('app-toast', onToast as EventListener);
+      window.removeEventListener('search-complete', onSearchComplete as EventListener);
+    };
   }, []);
 
   return (
@@ -70,9 +80,6 @@ export const MainLayout: React.FC = () => {
               </Link>
               <Link to='/open-account' className='hover:underline'>
                 Open Account
-              </Link>
-              <Link to='/accounts' className='hover:underline'>
-                Accounts
               </Link>
               <Link to='/tools' className='hover:underline'>
                 Tools
@@ -114,14 +121,16 @@ export const MainLayout: React.FC = () => {
 
               <button
                 type='submit'
-                className='px-3 py-1 bg-white text-blue-700 rounded text-sm font-medium'
+                disabled={isSearching}
+                className='px-3 py-1 bg-white text-blue-700 rounded text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed'
               >
                 Search
               </button>
               <button
                 type='button'
                 onClick={handleReset}
-                className='px-3 py-1 bg-blue-600 text-white rounded text-sm'
+                disabled={isSearching}
+                className='px-3 py-1 bg-blue-600 text-white rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed'
               >
                 Reset
               </button>
@@ -130,7 +139,15 @@ export const MainLayout: React.FC = () => {
         )}
       </header>
 
-      <main className='flex-1 overflow-auto'>
+      <main className='flex-1 overflow-auto relative'>
+        {isSearching && (
+          <div className='absolute inset-0 flex items-center justify-center bg-white bg-opacity-50 z-50'>
+            <div className='flex flex-col items-center gap-4'>
+              <div className='w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin'></div>
+              <p className='text-sm font-medium text-gray-700'>Searching...</p>
+            </div>
+          </div>
+        )}
         <div className='p-6 max-w-7xl mx-auto'>
           <Outlet />
         </div>

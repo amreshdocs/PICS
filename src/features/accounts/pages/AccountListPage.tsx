@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '@/app/store/hooks';
 import type { AccountDetails } from '@/features/accounts/types/account.types';
@@ -9,6 +9,10 @@ import { showToast } from '@/shared/utils/toast';
 export const AccountListPage: React.FC = () => {
   const navigate = useNavigate();
   const selected = useAppSelector((s) => s.customers?.selected ?? null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const accounts: AccountDetails[] = useMemo(() => {
     if (!selected?.raw) return [];

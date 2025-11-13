@@ -6,7 +6,7 @@ import {
   type CustomerSearchResponse,
   type SearchType,
 } from '@/features/search/services/customersApi';
-import { showToast } from '@/shared/utils/toast';
+import { showToast, formatDate, formatPhoneNumber } from '@/shared/utils';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -68,6 +68,7 @@ export const SearchPage: React.FC = () => {
       } catch {}
     } finally {
       setIsSearching(false);
+      window.dispatchEvent(new CustomEvent('search-complete'));
     }
   };
 
@@ -107,28 +108,6 @@ export const SearchPage: React.FC = () => {
     email: string;
     cisNumber: string;
   }
-
-  const formatPhoneNumber = (phone: string | number): string => {
-    const cleaned = String(phone).replace(/\D/g, '');
-    if (cleaned.length === 10) {
-      return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6)}`;
-    }
-    return String(phone);
-  };
-
-  const formatDate = (dateString: string): string => {
-    if (!dateString) return '-';
-    try {
-      const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      });
-    } catch {
-      return dateString;
-    }
-  };
 
   const extractCustomerDetails = (data: Record<string, unknown>): CustomerDetail => {
     return {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatCurrency } from '@/shared/utils';
 
 interface AccountsSummaryProps {
   raw?: Record<string, unknown>;
@@ -166,11 +167,6 @@ const renderAccounts = (raw?: Record<string, unknown>, type: 'asset' | 'liabilit
       })}
     </div>
   );
-};
-
-const formatCurrency = (value: number | string | null) => {
-  const num = Number(value) || 0;
-  return num.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 };
 
 export default AccountsSummary;
