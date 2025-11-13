@@ -4,6 +4,7 @@ import type {
   SortConfig,
   FilterConfig,
 } from '@/features/accounts/types/account.types';
+import { formatCurrency } from '@/shared/utils';
 import { AccountOptions } from './AccountOptions';
 
 interface AccountsListTableProps {
