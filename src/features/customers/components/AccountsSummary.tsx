@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatCurrency } from '@/shared/utils';
 
 interface AccountsSummaryProps {
   raw?: Record<string, unknown>;
