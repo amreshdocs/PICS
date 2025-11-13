@@ -71,9 +71,6 @@ export const MainLayout: React.FC = () => {
               <Link to='/open-account' className='hover:underline'>
                 Open Account
               </Link>
-              <Link to='/accounts' className='hover:underline'>
-                Accounts
-              </Link>
               <Link to='/tools' className='hover:underline'>
                 Tools
               </Link>
