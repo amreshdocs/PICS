@@ -1,7 +1,7 @@
 import type {
   CustomerSearchResponse,
   SearchType,
-} from '@/features/search/services/customerSearchApi';
+} from '@/features/search/services/customersApi';
 
 // Simplified mock dataset derived from provided payload
 const MOCK_CUSTOMERS: Record<string, any>[] = [
