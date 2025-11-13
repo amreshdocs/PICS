@@ -120,8 +120,9 @@ export const customersApi = {
       // Check for exceptions in response
       const exceptions = responseData?.Exceptions;
       if (exceptions && exceptions.Errors && Array.isArray(exceptions.Errors)) {
-        const errorMessages = exceptions.Errors
-          .map((err: ApiError) => err.ErrorMessage || err.ErrorType)
+        const errorMessages = exceptions.Errors.map(
+          (err: ApiError) => err.ErrorMessage || err.ErrorType
+        )
           .filter((msg: string) => msg && msg.trim() !== '')
           .join('; ');
 
