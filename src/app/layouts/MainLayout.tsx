@@ -5,6 +5,7 @@ export const MainLayout: React.FC = () => {
   const navigate = useNavigate();
   const [searchType, setSearchType] = useState<string>('accountNumber');
   const [searchValue, setSearchValue] = useState<string>('');
+  const [isSearching, setIsSearching] = useState(false);
   const [toast, setToast] = useState<{ message: string; visible: boolean }>({
     message: '',
     visible: false,
@@ -14,6 +15,7 @@ export const MainLayout: React.FC = () => {
     e?.preventDefault();
     // Navigate to search page without exposing query params in URL
     navigate('/search');
+    setIsSearching(true);
     // Dispatch a cross-window event to trigger the search on the SearchPage
     window.dispatchEvent(
       new CustomEvent('perform-search', { detail: { type: searchType, q: searchValue } })
@@ -35,8 +37,16 @@ export const MainLayout: React.FC = () => {
       window.setTimeout(() => setToast((s) => ({ ...s, visible: false })), timeout);
     };
 
+    const onSearchComplete = () => {
+      setIsSearching(false);
+    };
+
     window.addEventListener('app-toast', onToast as EventListener);
-    return () => window.removeEventListener('app-toast', onToast as EventListener);
+    window.addEventListener('search-complete', onSearchComplete as EventListener);
+    return () => {
+      window.removeEventListener('app-toast', onToast as EventListener);
+      window.removeEventListener('search-complete', onSearchComplete as EventListener);
+    };
   }, []);
 
   return (
