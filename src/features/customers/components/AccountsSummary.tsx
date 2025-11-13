@@ -169,9 +169,4 @@ const renderAccounts = (raw?: Record<string, unknown>, type: 'asset' | 'liabilit
   );
 };
 
-const formatCurrency = (value: number | string | null) => {
-  const num = Number(value) || 0;
-  return num.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-};
-
 export default AccountsSummary;
