@@ -109,28 +109,6 @@ export const SearchPage: React.FC = () => {
     cisNumber: string;
   }
 
-  const formatPhoneNumber = (phone: string | number): string => {
-    const cleaned = String(phone).replace(/\D/g, '');
-    if (cleaned.length === 10) {
-      return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6)}`;
-    }
-    return String(phone);
-  };
-
-  const formatDate = (dateString: string): string => {
-    if (!dateString) return '-';
-    try {
-      const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      });
-    } catch {
-      return dateString;
-    }
-  };
-
   const extractCustomerDetails = (data: Record<string, unknown>): CustomerDetail => {
     return {
       name: `${data.FirstName || ''} ${data.LastName || ''}`.trim() || '-',
