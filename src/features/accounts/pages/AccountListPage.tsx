@@ -10,6 +10,10 @@ export const AccountListPage: React.FC = () => {
   const navigate = useNavigate();
   const selected = useAppSelector((s) => s.customers?.selected ?? null);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const accounts: AccountDetails[] = useMemo(() => {
     if (!selected?.raw) return [];
 
