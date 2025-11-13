@@ -117,6 +117,19 @@ export const customersApi = {
         );
       }
 
+      // Check for exceptions in response
+      const exceptions = responseData?.Exceptions;
+      if (exceptions && exceptions.Errors && Array.isArray(exceptions.Errors)) {
+        const errorMessages = exceptions.Errors
+          .map((err: ApiError) => err.ErrorMessage || err.ErrorType)
+          .filter((msg: string) => msg && msg.trim() !== '')
+          .join('; ');
+
+        if (errorMessages) {
+          throw new Error(errorMessages);
+        }
+      }
+
       // Helper function to flatten nested Customer.PersonInfo structure
       const flattenCustomerData = (raw: Record<string, any>): Record<string, any> => {
         if (!raw) return raw;
@@ -149,7 +162,7 @@ export const customersApi = {
         dataArray = responseData.map(flattenCustomerData);
       } else if (responseData.data && Array.isArray(responseData.data)) {
         dataArray = responseData.data.map(flattenCustomerData);
-      } else if (responseData) {
+      } else if (responseData && !exceptions) {
         dataArray = [flattenCustomerData(responseData)];
       }
 
