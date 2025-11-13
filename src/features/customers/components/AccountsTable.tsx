@@ -1,10 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface AccountsTableProps {
   raw?: Record<string, unknown>;
 }
 
+const ACCOUNT_DISPLAY_LIMIT = 5;
+
 export const AccountsTable: React.FC<AccountsTableProps> = ({ raw }) => {
+  const navigate = useNavigate();
   const related = Array.isArray(raw?.RelatedAccounts) ? (raw!.RelatedAccounts as any[]) : [];
 
   const mapAcctTypeCode = (acctType?: string) => {
