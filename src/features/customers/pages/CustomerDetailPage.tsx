@@ -8,25 +8,7 @@ import { DemographicsSection } from '@/features/customers/components/Demographic
 import AccountsSummary from '@/features/customers/components/AccountsSummary';
 import AccountsTable from '@/features/customers/components/AccountsTable';
 import MissingAccountsList from '@/features/customers/components/MissingAccountsList';
-import { showToast } from '@/shared/utils/toast';
-
-const formatPhoneNumber = (phone: string | number): string => {
-  const cleaned = String(phone).replace(/\D/g, '');
-  if (cleaned.length === 10) {
-    return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6)}`;
-  }
-  return String(phone);
-};
-
-const formatDate = (dateString: string): string => {
-  if (!dateString) return '-';
-  try {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
-  } catch {
-    return dateString;
-  }
-};
+import { showToast, formatDate, formatPhoneNumber } from '@/shared/utils';
 
 const extractCustomerDetails = (data: Record<string, unknown>): CustomerDemographics => {
   return {
