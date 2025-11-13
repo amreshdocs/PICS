@@ -6,7 +6,7 @@ import {
   type CustomerSearchResponse,
   type SearchType,
 } from '@/features/search/services/customersApi';
-import { showToast } from '@/shared/utils/toast';
+import { showToast, formatDate, formatPhoneNumber } from '@/shared/utils';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
