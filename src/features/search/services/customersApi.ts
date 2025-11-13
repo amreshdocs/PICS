@@ -15,12 +15,22 @@ export interface CustomerResult {
   [key: string]: unknown;
 }
 
+export interface ApiError {
+  ErrorMessage: string | null;
+  ErrorType: string;
+}
+
+export interface ApiException {
+  Errors: ApiError[];
+}
+
 export interface CustomerSearchResponse {
   data: CustomerResult[];
   total: number;
   page: number;
   pageSize: number;
   totalPages: number;
+  exceptions?: ApiException;
 }
 
 const API_KEY = import.meta.env.VITE_X_API_KEY || '';
