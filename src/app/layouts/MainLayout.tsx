@@ -121,14 +121,16 @@ export const MainLayout: React.FC = () => {
 
               <button
                 type='submit'
-                className='px-3 py-1 bg-white text-blue-700 rounded text-sm font-medium'
+                disabled={isSearching}
+                className='px-3 py-1 bg-white text-blue-700 rounded text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed'
               >
                 Search
               </button>
               <button
                 type='button'
                 onClick={handleReset}
-                className='px-3 py-1 bg-blue-600 text-white rounded text-sm'
+                disabled={isSearching}
+                className='px-3 py-1 bg-blue-600 text-white rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed'
               >
                 Reset
               </button>
