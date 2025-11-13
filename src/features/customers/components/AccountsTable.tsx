@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { formatCurrency } from '@/shared/utils';
 
 interface AccountsTableProps {
   raw?: Record<string, unknown>;
