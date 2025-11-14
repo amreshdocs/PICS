@@ -1,10 +1,10 @@
-import React, { useMemo, useState } from 'react';
 import type {
   AccountDetails,
-  SortConfig,
   FilterConfig,
+  SortConfig,
 } from '@/features/accounts/types/account.types';
 import { formatCurrency } from '@/shared/utils';
+import React, { useMemo, useState } from 'react';
 import { AccountOptions } from './AccountOptions';
 
 interface AccountsListTableProps {
@@ -91,8 +91,6 @@ export const AccountsListTable: React.FC<AccountsListTableProps> = ({
       direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc',
     }));
   };
-
-  const sortableColumns: (keyof AccountDetails)[] = ['number', 'bank', 'product'];
 
   const renderSortIndicator = (column: keyof AccountDetails) => {
     if (sortConfig.key !== column) return null;
